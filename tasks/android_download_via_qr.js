@@ -1,50 +1,39 @@
 /*
- * grunt-android-download-via-qr
- * https://github.com/kjprice/grunt-android-download-via-qr
- *
- * Copyright (c) 2015 KJ
- * Licensed under the MIT license.
- */
+* grunt-android-download-via-qr
+* https://github.com/kjprice/grunt-android-download-via-qr
+*
+* Copyright (c) 2015 KJ
+* Licensed under the MIT license.
+*/
 
-'use strict';
+
+var qrDownload = require('qr_download');
+var fs = require('fs');
 
 module.exports = function(grunt) {
+'use strict';
+	grunt.registerMultiTask('android_download_via_qr', 'Download your android app via a QR code', function() {
+		var done = this.async();
 
-  // Please see the Grunt documentation for more information regarding task
-  // creation: http://gruntjs.com/creating-tasks
+		var androidDirectory = this.data.options.androidDirectory || 'android-test/';
+		if (!androidDirectory.match(/\/$/)) {
+			androidDirectory = androidDirectory + '/';
+		}
 
-  grunt.registerMultiTask('android_download_via_qr', 'Provides a QR code that, when scanned, will allow for your android device to test the latest build of your android project.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
-    });
+		fs.exists(androidDirectory, function (exists) {
+			if (exists) {
+				qrDownload(androidDirectory, {dontOpen:false}, done);
+			}
+			else {
+				var pathToAndroid = process.cwd() + '/' + androidDirectory;
+				var errMessage = 'The directory "{{dir}}" specified does not appear to be a working android directory; where it would be located at {{path}}'
+				.replace('{{dir}}', androidDirectory)
+				.replace('{{path}}', pathToAndroid);
+				grunt.log.error(errMessage);
+				done();
+			}
+		}); 
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
-
-      // Handle options.
-      src += options.punctuation;
-
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
-
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
-  });
+	});
 
 };
