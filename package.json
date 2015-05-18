@@ -1,7 +1,7 @@
 {
   "name": "grunt-android-download-via-qr",
   "description": "Provides a QR code that, when scanned, will allow for your android device to test the latest build of your android project.",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "homepage": "https://github.com/kjprice/grunt-android-download-via-qr",
   "author": {
     "name": "KJ",
@@ -26,6 +26,9 @@
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "qr_download": "^0.1.2"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "grunt-contrib-clean": "^0.5.0",
@@ -41,5 +44,8 @@
     "android",
     "QR code",
     "download android via QR code"
+  ],
+  "files": [
+  	"tasks"
   ]
 }
