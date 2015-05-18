@@ -7,7 +7,7 @@
 */
 
 
-var qrDownload = require('qr_download');
+var qrDownload = require('android-download-via-qr');
 var fs = require('fs');
 
 module.exports = function(grunt) {
