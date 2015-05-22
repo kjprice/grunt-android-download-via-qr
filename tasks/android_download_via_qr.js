@@ -20,19 +20,10 @@ module.exports = function(grunt) {
 			androidDirectory = androidDirectory + '/';
 		}
 
-		fs.exists(androidDirectory, function (exists) {
-			if (exists) {
-				qrDownload(androidDirectory, {dontOpen:false}, done);
-			}
-			else {
-				var pathToAndroid = process.cwd() + '/' + androidDirectory;
-				var errMessage = 'The directory "{{dir}}" specified does not appear to be a working android directory; where it would be located at {{path}}'
-				.replace('{{dir}}', androidDirectory)
-				.replace('{{path}}', pathToAndroid);
-				grunt.log.error(errMessage);
-				done();
-			}
-		}); 
+		qrDownload(androidDirectory, {dontOpen:false}, function (err) {
+			if (err) { return grunt.log.error(err); }
+			done();
+		});
 
 	});
 
