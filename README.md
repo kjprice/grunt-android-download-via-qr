@@ -33,6 +33,6 @@ grunt.initConfig({
 });
 ```
 
-Note here that the only parameter that needs to be passed is the android directory *relative to Gruntfile*. If your android directory is located the same place in your filesystem as Gruntfile, then simply the directory name will suffice. The path of your androidDirectory should look similar to `{androidDirectory}/www/config.xml`. Grunt will fail if `config.xml` cannot be found in the specified directory.
+Note here that the only parameter that needs to be passed is the android directory *relative to Gruntfile*. If your android directory is located the same place in your filesystem as Gruntfile, then simply the directory name will suffice.
 
 When complete, Chrome should open with a QR code. Scan that code with your android device and the app should automatically download on your phone. The QR code will look similar to https://github.com/kjprice/grunt-android-download-via-qr/blob/master/download.svg and will represent a link to an express server running on your local that will serve the android package.
